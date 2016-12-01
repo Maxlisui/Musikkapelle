@@ -1,30 +1,25 @@
 package DBClasses;
-import java.util.ArrayList;
 
 public class Instrument 
 {
-	private ArrayList<Instrument> instrumente = new ArrayList<Instrument>();
-	
 	private int instrumentenID;
 	private String name;
-	private String kathegorie;
+	private String kategorie;
 	private float preis;
+    private boolean isUpdated;
 	
-	public Instrument(int id, String na, String kath, float pr)
+	public Instrument(int id, String na, String kat, float pr)
 	{
 		instrumentenID = id;
 		name = na;
-		kathegorie = kath;
+		kategorie = kat;
 		preis = pr;
+		isUpdated = false;
 	}
 
-	public ArrayList<Instrument> getInstrumente() {
-		return instrumente;
-	}
-
-	public void setInstrumente(ArrayList<Instrument> instrumente) {
-		this.instrumente = instrumente;
-	}
+    public boolean isUpdated() {
+        return isUpdated;
+    }
 
 	public int getInstrumentenID() {
 		return instrumentenID;
@@ -32,6 +27,7 @@ public class Instrument
 
 	public void setInstrumentenID(int instrumentenID) {
 		this.instrumentenID = instrumentenID;
+		isUpdated = true;
 	}
 
 	public String getName() {
@@ -42,12 +38,13 @@ public class Instrument
 		this.name = name;
 	}
 
-	public String getKathegorie() {
-		return kathegorie;
+	public String getKategorie() {
+		return kategorie;
 	}
 
-	public void setKathegorie(String kathegorie) {
-		this.kathegorie = kathegorie;
+	public void setKategorie(String kategorie) {
+		this.kategorie = kategorie;
+        isUpdated = true;
 	}
 
 	public float getPreis() {
@@ -56,6 +53,7 @@ public class Instrument
 
 	public void setPreis(float preis) {
 		this.preis = preis;
+        isUpdated = true;
 	}
 	
 	
