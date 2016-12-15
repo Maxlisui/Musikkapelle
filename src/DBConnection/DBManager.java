@@ -232,11 +232,71 @@ public class DBManager
 
     public void updateMusikantIntrument(MusikantInstrument mi) throws SQLException
     {
-        String query = "UPDATE MusikantInstrument set Stimme=? WHERE MusikantID=? AND InstrumentID=?";
+        if(mi.isUpdated()) {
+            String query = "UPDATE MusikantInstrument set Stimme=? WHERE MusikantID=? AND InstrumentID=?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, mi.getStimme());
+            stmt.setInt(2, mi.getMusikantid());
+            stmt.setInt(3, mi.getInstrumentid());
+            stmt.executeUpdate();
+
+            close();
+            stmt.close();
+        }
+    }
+
+    public void insertMusikant(Musikant m) throws SQLException
+    {
+        String query = "INSERT INTO Musikant (Vorname, Nachname, Geburtsdatum, Email, Spezialfunktion, Hauptwohnsitz)"+
+                "VALUES (?, ? ,? , ? ,? ,? )";
         PreparedStatement stmt = conn.prepareStatement(query);
-        stmt.setString(1, mi.getStimme());
-        stmt.setInt(2, mi.getMusikantid());
-        stmt.setInt(3, mi.getInstrumentid());
+        stmt.setString(1, m.getVorname());
+        stmt.setString(2, m.getNachname());
+        stmt.setDate(3, m.getGeburtsdatum());
+        stmt.setString(4, m.getEmail());
+        stmt.setString(5, m.getSpezailfunktion());
+        stmt.setInt(6, m.getHauptwohnsitzId());
+        stmt.executeUpdate();
+
+        close();
+        stmt.close();
+    }
+
+    public void insertIntrument(Instrument i) throws SQLException
+    {
+        String query = "INSERT INTO Instrument (Name, Kategorie, Preis) VALUES(?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, i.getName());
+        stmt.setString(2, i.getKategorie());
+        stmt.setFloat(3, i.getPreis());
+        stmt.executeUpdate();
+
+        close();
+        stmt.close();
+    }
+
+    public void insertHauptwohnsitz(Hauptwohnsitz h) throws SQLException
+    {
+        String query = "INSERT INTO Hauptwohnsitz (Strasse, Hausnummer, PLZ, Ort, Land) VALUES(?, ?, ?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, h.getStrasse());
+        stmt.setString(2, h.getHausnummer());
+        stmt.setInt(3, h.getPLZ());
+        stmt.setString(4, h.getOrt());
+        stmt.setString(5, h.getOrt());
+        stmt.executeUpdate();
+
+        close();
+        stmt.close();
+    }
+
+    public void insertMusikantInstrument(MusikantInstrument mi) throws SQLException
+    {
+        String query = "INSERT INTO MusikantInstrument (MusikantID, InstrumentID, Stimme) VALUES(?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setInt(1, mi.getMusikantid());
+        stmt.setInt(2, mi.getInstrumentid());
+        stmt.setString(3, mi.getStimme());
         stmt.executeUpdate();
 
         close();
