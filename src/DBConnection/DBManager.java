@@ -193,5 +193,54 @@ public class DBManager
         }
     }
 
-    
+    public void updateInstrument(Instrument i) throws SQLException
+    {
+        if(i.isUpdated())
+        {
+            String query = "UPDATE Instrument set Name=?, Kategorie=?, Preis=? WHERE InstrumentID=?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, i.getName());
+            stmt.setString(2, i.getKategorie());
+            stmt.setFloat(3, i.getPreis());
+            stmt.setInt(4, i.getInstrumentenID());
+            stmt.executeUpdate();
+
+            close();
+            stmt.close();
+        }
+    }
+
+    public void updateHauptwohnsitz(Hauptwohnsitz h) throws SQLException
+    {
+        if(h.isUpdated())
+        {
+            String query = "UPDATE Hauptwohnsitz set Strasse=?, Hausnummer=?, PLZ=?, Ort=?, Land=?"+
+                    "WHERE HauptwohnsitzID=?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, h.getStrasse());
+            stmt.setString(2, h.getHausnummer());
+            stmt.setInt(3, h.getPLZ());
+            stmt.setString(4, h.getOrt());
+            stmt.setString(5, h.getLand());
+            stmt.setInt(6, h.getId());
+            stmt.executeUpdate();
+
+            close();
+            stmt.close();
+        }
+    }
+
+    public void updateMusikantIntrument(MusikantInstrument mi) throws SQLException
+    {
+        String query = "UPDATE MusikantInstrument set Stimme=? WHERE MusikantID=? AND InstrumentID=?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, mi.getStimme());
+        stmt.setInt(2, mi.getMusikantid());
+        stmt.setInt(3, mi.getInstrumentid());
+        stmt.executeUpdate();
+
+        close();
+        stmt.close();
+    }
+
 }
