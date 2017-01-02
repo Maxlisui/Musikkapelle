@@ -2,32 +2,48 @@ package DBClasses;
 
 public class Instrument 
 {
-	private int instrumentenID;
+	private int Id;
 	private String name;
 	private String kategorie;
-	private float preis;
+	private double preis;
     private boolean isUpdated;
-	
+    private boolean isNew;
+
 	public Instrument(int id, String na, String kat, float pr)
 	{
-		instrumentenID = id;
+		Id = id;
 		name = na;
 		kategorie = kat;
 		preis = pr;
-		isUpdated = false;
+		this.isNew = false;
+		this.isUpdated = false;
+	}
+	
+	public boolean isNew()
+	{
+		return isNew;
+	}
+
+	public void setNew(boolean isNew)
+	{
+		this.isNew = isNew;
+	}
+
+	public void setUpdated(boolean isUpdated)
+	{
+		this.isUpdated = isUpdated;
 	}
 
     public boolean isUpdated() {
         return isUpdated;
     }
 
-	public int getInstrumentenID() {
-		return instrumentenID;
+	public int getId() {
+		return Id;
 	}
 
-	public void setInstrumentenID(int instrumentenID) {
-		this.instrumentenID = instrumentenID;
-		isUpdated = true;
+	public void setId(int id) {
+		this.Id = id;
 	}
 
 	public String getName() {
@@ -44,19 +60,13 @@ public class Instrument
 
 	public void setKategorie(String kategorie) {
 		this.kategorie = kategorie;
-        isUpdated = true;
 	}
 
-	public float getPreis() {
+	public double getPreis() {
 		return preis;
 	}
 
-	public void setPreis(float preis) {
+	public void setPreis(double preis) {
 		this.preis = preis;
-        isUpdated = true;
 	}
-	
-	
-	
-	
 }

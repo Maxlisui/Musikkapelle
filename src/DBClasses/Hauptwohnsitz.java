@@ -12,16 +12,38 @@ public class Hauptwohnsitz
     private String ort;
     private String land;
     private boolean isUpdated;
-
-    public Hauptwohnsitz(int id, String strasse, String hausnummer, int PLZ, String ort, String land) {
+	private boolean isNew;
+    
+	public Hauptwohnsitz(int id, String strasse, String hausnummer, int PLZ, String ort, String land) {
         this.id = id;
         this.strasse = strasse;
         this.hausnummer = hausnummer;
         this.PLZ = PLZ;
         this.ort = ort;
         this.land = land;
-        isUpdated = false;
+		this.isNew = false;
+		this.isUpdated = false;
     }
+	
+    public boolean isUpdated()
+	{
+		return isUpdated;
+	}
+
+	public void setUpdated(boolean isUpdated)
+	{
+		this.isUpdated = isUpdated;
+	}
+	
+	public boolean isNew()
+	{
+		return isNew;
+	}
+
+	public void setNew(boolean isNew)
+	{
+		this.isNew = isNew;
+	}
 
     public int getId() {
         return id;
@@ -33,7 +55,6 @@ public class Hauptwohnsitz
 
     public void setStrasse(String strasse) {
         this.strasse = strasse;
-        isUpdated = true;
     }
 
     public String getHausnummer() {
@@ -42,7 +63,6 @@ public class Hauptwohnsitz
 
     public void setHausnummer(String hausnummer) {
         this.hausnummer = hausnummer;
-        isUpdated = true;
     }
 
     public int getPLZ() {
@@ -51,7 +71,6 @@ public class Hauptwohnsitz
 
     public void setPLZ(int PLZ) {
         this.PLZ = PLZ;
-        isUpdated = true;
     }
 
     public String getOrt() {
@@ -60,20 +79,18 @@ public class Hauptwohnsitz
 
     public void setOrt(String ort) {
         this.ort = ort;
-        isUpdated = true;
     }
 
     public String getLand() {
         return land;
     }
 
-    public boolean isUpdated() {
-        return isUpdated;
-    }
-
     public void setLand(String land) {
         this.land = land;
-        isUpdated = true;
-
     }
+
+	public void setId(int id)
+	{
+		this.id = id;
+	}
 }

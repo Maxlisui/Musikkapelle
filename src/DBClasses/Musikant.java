@@ -7,99 +7,130 @@ import java.sql.Date;
  */
 public class Musikant
 {
-    private int id;
-    private String vorname;
-    private String nachname;
-    private Date geburtsdatum;
-    private String email;
-    private String Spezailfunktion;
-    private int hauptwohnsitzId;
-    private Hauptwohnsitz hauptwohnsitz;
-    private boolean isUpdated;
+	private int id;
+	private String vorname;
+	private String nachname;
+	private Date geburtsdatum;
+	private String email;
+	private String spezailfunktion;
+	private int hauptwohnsitzId;
+	private Hauptwohnsitz hauptwohnsitz;
+	private boolean isUpdated;
+	private boolean isNew;
 
-    public Musikant(int id, String vorname, String nachname, Date geburtsdatum, String email, String spezailfunktion, int hauptwohnsitzId) {
-        this.id = id;
-        this.vorname = vorname;
-        this.nachname = nachname;
-        this.geburtsdatum = geburtsdatum;
-        this.email = email;
-        Spezailfunktion = spezailfunktion;
-        this.hauptwohnsitzId = hauptwohnsitzId;
-        isUpdated = false;
-    }
+	public Musikant(int id, String vorname, String nachname, Date geburtsdatum, String email, String spezailfunktion,
+			int hauptwohnsitzId)
+	{
+		this.id = id;
+		this.vorname = vorname;
+		this.nachname = nachname;
+		this.geburtsdatum = geburtsdatum;
+		this.email = email;
+		this.spezailfunktion = spezailfunktion;
+		this.hauptwohnsitzId = hauptwohnsitzId;
+		this.isNew = false;
+		this.isUpdated = false;
+	}
 
-    public boolean isUpdated() {
-        return isUpdated;
-    }
+	public boolean isNew()
+	{
+		return isNew;
+	}
 
-    public Hauptwohnsitz getHauptwohnsitz() {
-        return hauptwohnsitz;
-    }
+	public void setNew(boolean isNew)
+	{
+		this.isNew = isNew;
+	}
 
-    public void setHauptwohnsitz(Hauptwohnsitz hauptwohnsitz) {
-        this.hauptwohnsitz = hauptwohnsitz;
-        isUpdated = true;
-    }
+	public void setUpdated(boolean isUpdated)
+	{
+		this.isUpdated = isUpdated;
+	}
 
-    public int getHauptwohnsitzId() {
-        return hauptwohnsitzId;
-    }
+	public boolean isUpdated()
+	{
+		return isUpdated;
+	}
 
-    public void setHauptwohnsitzId(int hauptwohnsitzId) {
-        this.hauptwohnsitzId = hauptwohnsitzId;
-        isUpdated = true;
-    }
+	public Hauptwohnsitz getHauptwohnsitz()
+	{
+		return hauptwohnsitz;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setHauptwohnsitz(Hauptwohnsitz hauptwohnsitz)
+	{
+		this.hauptwohnsitz = hauptwohnsitz;
+		setHauptwohnsitzId(hauptwohnsitz.getId());
+	}
 
-    public void setVorname(String vorname) {
-        this.vorname = vorname;
-        isUpdated = true;
-    }
+	public int getHauptwohnsitzId()
+	{
+		return hauptwohnsitzId;
+	}
 
-    public void setNachname(String nachname) {
-        this.nachname = nachname;
-        isUpdated = true;
-    }
+	public void setHauptwohnsitzId(int hauptwohnsitzId)
+	{
+		this.hauptwohnsitzId = hauptwohnsitzId;
+	}
 
-    public void setGeburtsdatum(Date geburtsdatum) {
-        this.geburtsdatum = geburtsdatum;
-        isUpdated = true;
-    }
+	public void setId(int id)
+	{
+		this.id = id;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-        isUpdated = true;
-    }
+	public void setVorname(String vorname)
+	{
+		this.vorname = vorname;
+	}
 
-    public void setSpezailfunktion(String spezailfunktion) {
-        Spezailfunktion = spezailfunktion;
-        isUpdated = true;
-    }
+	public void setNachname(String nachname)
+	{
+		this.nachname = nachname; 
+	}
 
-    public int getId() {
+	public void setGeburtsdatum(Date geburtsdatum)
+	{
+		this.geburtsdatum = geburtsdatum; 
+	}
 
-        return id;
-    }
-    public String getVorname() {
-        return vorname;
-    }
+	public void setEmail(String email)
+	{
+		this.email = email; 
+	}
 
-    public String getNachname() {
-        return nachname;
-    }
+	public void setSpezailfunktion(String spezailfunktion)
+	{
+		this.spezailfunktion = spezailfunktion;
+	}
 
-    public Date getGeburtsdatum() {
-        return geburtsdatum;
-    }
+	public int getId()
+	{
 
-    public String getEmail() {
-        return email;
-    }
+		return id;
+	}
 
-    public String getSpezailfunktion() {
-        return Spezailfunktion;
-    }
+	public String getVorname()
+	{
+		return vorname;
+	}
+
+	public String getNachname()
+	{
+		return nachname;
+	}
+
+	public Date getGeburtsdatum()
+	{
+		return geburtsdatum;
+	}
+
+	public String getEmail()
+	{
+		return email;
+	}
+
+	public String getSpezailfunktion()
+	{
+		return spezailfunktion;
+	}
 }
