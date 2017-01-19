@@ -76,8 +76,7 @@ CREATE TABLE `musikant` (
 
 CREATE TABLE `musikantinstrument` (
   `MusikantId` int(11) NOT NULL,
-  `InstrumentId` int(11) NOT NULL,
-  `Stimme` varchar(100) DEFAULT NULL
+  `InstrumentId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

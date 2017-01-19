@@ -13,17 +13,29 @@ public class Hauptwohnsitz
     private String land;
     private boolean isUpdated;
 	private boolean isNew;
-    
-	public Hauptwohnsitz(int id, String strasse, String hausnummer, int PLZ, String ort, String land) {
+	private boolean isDeleted;
+
+	public Hauptwohnsitz(int id, String strasse, String hausnummer, int PLZ, String ort, String land, boolean isNew) {
         this.id = id;
         this.strasse = strasse;
         this.hausnummer = hausnummer;
         this.PLZ = PLZ;
         this.ort = ort;
         this.land = land;
-		this.isNew = false;
+		this.isNew = isNew;
 		this.isUpdated = false;
+		this.isDeleted = false;
     }
+	
+	public boolean isDeleted()
+	{
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted)
+	{
+		this.isDeleted = isDeleted;
+	}
 	
     public boolean isUpdated()
 	{

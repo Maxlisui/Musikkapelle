@@ -20,6 +20,7 @@ public class GloballyData
 	private ArrayList<Instrument> alreadyUsedInstrumente;
 	private int musikantIdForEditing;
 	private int wohnsitzIdForEditing;
+	private int instrumentIdForEditing;
 
 	private GloballyData() 
 	{
@@ -36,8 +37,15 @@ public class GloballyData
 			instance = new GloballyData();
 		}
 		return instance;
+	}	
+
+	public int getInstrumentIdForEditing() {
+		return instrumentIdForEditing;
 	}
-	
+
+	public void setInstrumentIdForEditing(int instrumentIdForEditing) {
+		this.instrumentIdForEditing = instrumentIdForEditing;
+	}
 
 	public int getWohnsitzIdForEditing() {
 		return wohnsitzIdForEditing;

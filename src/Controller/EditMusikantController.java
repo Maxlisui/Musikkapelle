@@ -63,6 +63,9 @@ public class EditMusikantController {
     @FXML
     private Button btn_remove_Instrument;
     
+    /**
+     * Gets called when the UI is generated. Initializes the UI.
+     */
     @FXML
     private void initialize()
     {
@@ -86,12 +89,20 @@ public class EditMusikantController {
     	column_Instrumente_Id.setStyle(centerStyle);
     }
     
+    /**
+     * Eventhandler for the "Cancel" button
+     * @param event MousEvent handler
+     */
     @FXML
     void btn_Cancel_clicked(MouseEvent event) 
     {	
     	close();
     }
 
+    /**
+     * Eventhandler for the "Save" button
+     * @param event MouseEvent handler
+     */
     @FXML
     void btn_Save_clicked(MouseEvent event) 
     {
@@ -99,6 +110,11 @@ public class EditMusikantController {
     	else saveUpdatedMusikant();
     }
     
+    /**
+     * Eventhandler for the "Instrument hinzufügen" buttons
+     * @param event MouseEvent handler
+     * @throws IOException In case the .fxml file could not be found
+     */
     @FXML
     void btn_add_Instrument_clicked(MouseEvent event) throws IOException 
     {
@@ -118,6 +134,10 @@ public class EditMusikantController {
 		}
     }
     
+    /**
+     * Eventhandler for the "Instrument löschen" button
+     * @param event MouseEvent handler
+     */
     @FXML
     void btn_remove_Instrument_clicked(MouseEvent event)
     {
@@ -125,6 +145,11 @@ public class EditMusikantController {
     	updateInstrumente();
     }
 
+    /**
+     * Evethandler for the "Hauprwohnsitz wählen" button
+     * @param event MouseEvent handler 
+     * @throws IOException In case the .fxml file could not be found
+     */
     @FXML
     void btn_choose_Hauptwohnsitz_clicked(MouseEvent event) throws IOException 
     {
@@ -132,7 +157,7 @@ public class EditMusikantController {
 		Scene chooseHauptwohnsitzScene = new Scene(root);
 		Stage chooseHauptwohnsitzStage = new Stage();
 		chooseHauptwohnsitzStage.setScene(chooseHauptwohnsitzScene);
-		chooseHauptwohnsitzStage.setTitle("Hauptwohnsitz w�hlen");
+		chooseHauptwohnsitzStage.setTitle("Hauptwohnsitz wählen");
 		chooseHauptwohnsitzStage.getIcons().add(new Image("http://web2153.ws.mynet.at/uploads/pics/logoleft1_01.jpg"));
 		chooseHauptwohnsitzStage.initModality(Modality.APPLICATION_MODAL);
 		chooseHauptwohnsitzStage.showAndWait();
@@ -142,18 +167,27 @@ public class EditMusikantController {
 		}
     }
     
+    /**
+     * Updates the Instrumente TableView
+     */
     private void updateInstrumente()
     {
     	tView_Instrumente.setItems(FXCollections.observableArrayList(newlyAddedInstruments));
     	column_Instrumente_Id.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getId())));
     }
     
+    /**
+     * Closes the given stage
+     */
     private void close()
     {
         Stage thisStage = (Stage) btn_Cancel.getScene().getWindow();
         thisStage.close();
     }
     
+    /**
+     * Saves a new Musikant
+     */
     private void saveNewMusikant()
     {
 		String vorname = tBox_Vorname.getText();
@@ -183,7 +217,7 @@ public class EditMusikantController {
             		for(Instrument i : newlyAddedInstruments)
             		{
             			GloballyData.getInstance().getMusikantInstrumente().add(
-            					new MusikantInstrument(id, i.getId(), "", true));
+            					new MusikantInstrument(id, i.getId(), true));
             		}
             		
             		showMessageBox("Neuer Musikant angelegt", "\"Ok\" um ins Hauptmenü zurückzukehren.");
@@ -217,6 +251,9 @@ public class EditMusikantController {
     	}
     }
     
+    /**
+     * Saves a updated Musikant
+     */
 	private void saveUpdatedMusikant()
 	{
 		String vorname = tBox_Vorname.getText();
@@ -261,7 +298,7 @@ public class EditMusikantController {
 					for(Instrument i : newInstrumente)
 					{
 						GloballyData.getInstance().getMusikantInstrumente().add(
-								new MusikantInstrument(editableMusikant.getId(), i.getId(), "", true));
+								new MusikantInstrument(editableMusikant.getId(), i.getId(), true));
 					}
 					
 					ArrayList<Instrument> deletedInstrumente = new ArrayList<>();
@@ -307,6 +344,11 @@ public class EditMusikantController {
     	}
 	}
     
+    /**
+     * Opens a alert box 
+     * @param title Title of the Box
+     * @param content Content of the Box
+     */
     private void showMessageBox(String title, String content)
 	{
     	Alert alert = new Alert(AlertType.INFORMATION);
@@ -317,6 +359,13 @@ public class EditMusikantController {
     	alert.showAndWait();
 	}
     
+    /**
+     * Opens a alert box
+     * @param title Title of the box
+     * @param header Header of the box
+     * @param body Body of the box
+     * @return Whether "Ok" Button is pressed
+     */
     private boolean showMessageBox(String title, String header, String body)
 	{
     	Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -335,6 +384,11 @@ public class EditMusikantController {
     	}
 	}
     
+    /**
+     * Checks whether the given String is null or empty
+     * @param s Given string
+     * @return Whether the string is null or empty
+     */
     private boolean isNullOrEmpty(String s)
     {
     	return s == null||s.trim().isEmpty();

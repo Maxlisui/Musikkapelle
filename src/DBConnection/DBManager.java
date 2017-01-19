@@ -1,7 +1,6 @@
 package DBConnection;
 
 import DBClasses.*;
-
 import java.sql.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -52,7 +51,7 @@ public class DBManager
 		{
 			musikanten.add(new Musikant(rs.getInt("Id"), rs.getString("Vorname"), rs.getString("Nachname"),
 					rs.getDate("Geburtsdatum"), rs.getString("Email"), rs.getString("Spezialfunktion"),
-					rs.getInt("Hauptwohnsitz")));
+					rs.getInt("Hauptwohnsitz"), false));
 		}
 
 		rs.close();
@@ -71,7 +70,7 @@ public class DBManager
 		while (rs.next())
 		{
 			hauptwohnsitze.add(new Hauptwohnsitz(rs.getInt("Id"), rs.getString("Strasse"),
-					rs.getString("Hausnummer"), rs.getInt("PLZ"), rs.getString("Ort"), rs.getString("Land")));
+					rs.getString("Hausnummer"), rs.getInt("PLZ"), rs.getString("Ort"), rs.getString("Land"), false));
 		}
 
 		stmt.close();
@@ -92,7 +91,7 @@ public class DBManager
 		if (rs.next())
 		{
 			hauptwohnsitz = new Hauptwohnsitz(rs.getInt("HauptwohnsitzID"), rs.getString("Strasse"),
-					rs.getString("Hausnummer"), rs.getInt("PLZ"), rs.getString("Ort"), rs.getString("Land"));
+					rs.getString("Hausnummer"), rs.getInt("PLZ"), rs.getString("Ort"), rs.getString("Land"), false);
 		}
 
 		stmt.close();
@@ -112,7 +111,7 @@ public class DBManager
 		while (rs.next())
 		{
 			instrumente.add(new Instrument(rs.getInt("Id"), rs.getString("Name"), rs.getString("Kategorie"),
-					rs.getFloat("Preis")));
+					rs.getFloat("Preis"), false));
 		}
 
 		stmt.close();
@@ -121,7 +120,7 @@ public class DBManager
 		return instrumente;
 	}
 
-	public ArrayList<MusikantInstrument> selectAllInstrumentMusikant() throws SQLException
+	public ArrayList<MusikantInstrument> selectAllMusikantInstrument() throws SQLException
 	{
 		ArrayList<MusikantInstrument> musikantInstrumente = new ArrayList<>();
 
@@ -132,7 +131,7 @@ public class DBManager
 		while (rs.next())
 		{
 			musikantInstrumente.add(
-					new MusikantInstrument(rs.getInt("MusikantId"), rs.getInt("InstrumentID"), rs.getString("Stimme")));
+					new MusikantInstrument(rs.getInt("MusikantId"), rs.getInt("InstrumentID"), false));
 		}
 
 		stmt.close();
@@ -141,7 +140,7 @@ public class DBManager
 		return musikantInstrumente;
 	}
 
-	public Musikant selectMusikantPerMusikantInstrument(MusikantInstrument m) throws SQLException
+	private Musikant selectMusikantPerMusikantInstrument(MusikantInstrument m) throws SQLException
 	{
 		Musikant musikant = null;
 
@@ -154,7 +153,7 @@ public class DBManager
 		{
 			musikant = new Musikant(rs.getInt("MusikantID"), rs.getString("Vorname"), rs.getString("Nachname"),
 					rs.getDate("Geburtsdatum"), rs.getString("Email"), rs.getString("Spezialfunktion"),
-					rs.getInt("Hauptwohnsitz"));
+					rs.getInt("Hauptwohnsitz"), false);
 			musikant.setHauptwohnsitz(selectHauptwohnsitzPerMusikant(musikant));
 		}
 
@@ -164,7 +163,7 @@ public class DBManager
 		return musikant;
 	}
 
-	public Instrument selectInstrumentPerMusikantInstrument(MusikantInstrument m) throws SQLException
+	private Instrument selectInstrumentPerMusikantInstrument(MusikantInstrument m) throws SQLException
 	{
 		Instrument instrument = null;
 
@@ -176,7 +175,7 @@ public class DBManager
 		if (rs.next())
 		{
 			instrument = new Instrument(rs.getInt("InstrumentID"), rs.getString("Name"), rs.getString("Kategorie"),
-					rs.getFloat("Preis"));
+					rs.getFloat("Preis"), false);
 
 		}
 
@@ -186,29 +185,26 @@ public class DBManager
 		return instrument;
 	}
 
-	public void updateMusikant(Musikant m) throws SQLException
+	private void updateMusikant(Musikant m) throws SQLException
 	{
-		if (m.isUpdated())
-		{
-			String query = "UPDATE Musikant set Vorname=?, Nachname=?, Geburtsdatum=?, Email=?, Spezialfunktion=?,"
-					+ "Hauptwohnsitz=? WHERE MusikantID=?";
-			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setString(1, m.getVorname());
-			stmt.setString(2, m.getNachname());
-			stmt.setDate(3, m.getGeburtsdatum());
-			stmt.setString(4, m.getEmail());
-			stmt.setString(5, m.getSpezailfunktion());
-			stmt.setInt(6, m.getHauptwohnsitzId());
-			stmt.setInt(7, m.getId());
-			stmt.executeUpdate();
+		String query = "UPDATE Musikant set Vorname=?, Nachname=?, Geburtsdatum=?, Email=?, Spezialfunktion=?,"
+				+ "Hauptwohnsitz=? WHERE Id=?";
+		PreparedStatement stmt = conn.prepareStatement(query);
+		stmt.setString(1, m.getVorname());
+		stmt.setString(2, m.getNachname());
+		stmt.setDate(3, m.getGeburtsdatum());
+		stmt.setString(4, m.getEmail());
+		stmt.setString(5, m.getSpezialfunktion());
+		stmt.setInt(6, m.getHauptwohnsitzId());
+		stmt.setInt(7, m.getId());
+		stmt.executeUpdate();
 
-			stmt.close();
-		}
+		stmt.close();
 	}
 
-	public void updateInstrument(Instrument i) throws SQLException
+	private void updateInstrument(Instrument i) throws SQLException
 	{
-		String query = "UPDATE Instrument set Name=?, Kategorie=?, Preis=? WHERE InstrumentID=?";
+		String query = "UPDATE Instrument set Name=?, Kategorie=?, Preis=? WHERE Id=?";
 		PreparedStatement stmt = conn.prepareStatement(query);
 		stmt.setString(1, i.getName());
 		stmt.setString(2, i.getKategorie());
@@ -219,10 +215,10 @@ public class DBManager
 		stmt.close();
 	}
 
-	public void updateHauptwohnsitz(Hauptwohnsitz h) throws SQLException
+	private void updateHauptwohnsitz(Hauptwohnsitz h) throws SQLException
 	{
 		String query = "UPDATE Hauptwohnsitz set Strasse=?, Hausnummer=?, PLZ=?, Ort=?, Land=?"
-				+ "WHERE HauptwohnsitzID=?";
+				+ "WHERE Id=?";
 		PreparedStatement stmt = conn.prepareStatement(query);
 		stmt.setString(1, h.getStrasse());
 		stmt.setString(2, h.getHausnummer());
@@ -235,22 +231,7 @@ public class DBManager
 		stmt.close();
 	}
 
-	public void updateMusikantIntrument(MusikantInstrument mi) throws SQLException
-	{
-		if (mi.isUpdated())
-		{
-			String query = "UPDATE MusikantInstrument set Stimme=? WHERE MusikantID=? AND InstrumentID=?";
-			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setString(1, mi.getStimme());
-			stmt.setInt(2, mi.getMusikantid());
-			stmt.setInt(3, mi.getInstrumentid());
-			stmt.executeUpdate();
-
-			stmt.close();
-		}
-	}
-
-	public void insertMusikant(Musikant m) throws SQLException
+	private void insertMusikant(Musikant m) throws SQLException
 	{
 		String query = "INSERT INTO Musikant (Id, Vorname, Nachname, Geburtsdatum, Email, Spezialfunktion, Hauptwohnsitz)"
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -260,14 +241,14 @@ public class DBManager
 		stmt.setString(3, m.getNachname());
 		stmt.setDate(4, m.getGeburtsdatum());
 		stmt.setString(5, m.getEmail());
-		stmt.setString(6, m.getSpezailfunktion());
+		stmt.setString(6, m.getSpezialfunktion());
 		stmt.setInt(7, m.getHauptwohnsitzId());
 		stmt.executeUpdate();
 
 		stmt.close();
 	}
 
-	public void insertIntrument(Instrument i) throws SQLException
+	private void insertIntrument(Instrument i) throws SQLException
 	{
 		String query = "INSERT INTO Instrument (Id, Name, Kategorie, Preis) VALUES(?, ?, ?, ?)";
 		PreparedStatement stmt = conn.prepareStatement(query);
@@ -280,7 +261,7 @@ public class DBManager
 		stmt.close();
 	}
 
-	public void insertHauptwohnsitz(Hauptwohnsitz h) throws SQLException
+	private void insertHauptwohnsitz(Hauptwohnsitz h) throws SQLException
 	{
 		String query = "INSERT INTO Hauptwohnsitz (Id, Strasse, Hausnummer, PLZ, Ort, Land) VALUES(?, ?, ?, ?, ?, ?)";
 		PreparedStatement stmt = conn.prepareStatement(query);
@@ -295,21 +276,85 @@ public class DBManager
 		stmt.close();
 	}
 
-	public void insertMusikantInstrument(MusikantInstrument mi) throws SQLException
+	private void insertMusikantInstrument(MusikantInstrument mi) throws SQLException
 	{
-		String query = "INSERT INTO MusikantInstrument (MusikantID, InstrumentID, Stimme) VALUES(?, ?, ?)";
+		String query = "INSERT INTO MusikantInstrument (MusikantID, InstrumentID) VALUES(?, ?)";
 		PreparedStatement stmt = conn.prepareStatement(query);
 		stmt.setInt(1, mi.getMusikantid());
 		stmt.setInt(2, mi.getInstrumentid());
-		stmt.setString(3, mi.getStimme());
 		stmt.executeUpdate();
 
+		stmt.close();
+	}
+	
+	private void deleteMusikant(Musikant m) throws SQLException
+	{
+		String query = "DELETE FROM Musikant WHERE Id=?";
+		PreparedStatement stmt = conn.prepareStatement(query);
+		stmt.setInt(1, m.getId());
+		stmt.executeUpdate();
+		
+		stmt.close();
+	}
+	
+	private void deleteHauptwohnsitz(Hauptwohnsitz h) throws SQLException
+	{
+		String query = "DELETE FROM Hauptwohnsitz WHERE Id=?";
+		PreparedStatement stmt = conn.prepareStatement(query);
+		stmt.setInt(1, h.getId());
+		stmt.executeUpdate();
+		
+		stmt.close();
+	}
+	
+	private void deleteInstrument(Instrument i) throws SQLException
+	{
+		String query = "DELETE FROM Instrument WHERE Id=?";
+		PreparedStatement stmt = conn.prepareStatement(query);
+		stmt.setInt(1, i.getId());
+		stmt.executeUpdate();
+		
+		stmt.close();
+	}
+	
+	private void deleteMusikantInstrument(MusikantInstrument mi) throws SQLException
+	{
+		String query = "DELETE FROM MusikantInstrument WHERE MusikantId=? AND InstrumentId=?";
+		PreparedStatement stmt = conn.prepareStatement(query);
+		stmt.setInt(1, mi.getMusikantid());
+		stmt.setInt(2, mi.getInstrumentid());
+		stmt.executeUpdate();
+		
 		stmt.close();
 	}
 
 	public void refreshDB(ArrayList<Musikant> musikanten, ArrayList<Instrument> instrumente, ArrayList<Hauptwohnsitz> hauptwohnsitze, 
 			ArrayList<MusikantInstrument> musikantInstrumente) throws SQLException
 	{
+		//MusikantInstrument l�schen
+		for(MusikantInstrument mi : musikantInstrumente.stream().filter(x -> x.isDeleted()).collect(Collectors.toList()))
+		{
+			deleteMusikantInstrument(mi);
+		}
+		
+		//Instrument l�schen
+		for(Instrument i : instrumente.stream().filter(x -> x.isDeleted()).collect(Collectors.toList()))
+		{
+			deleteInstrument(i);
+		}
+		
+		//Musikant l�schen
+		for(Musikant m : musikanten.stream().filter(x -> x.isDeleted()).collect(Collectors.toList()))
+		{
+			deleteMusikant(m);
+		}
+		
+		//Hauptwohnsitz l�schen
+		for(Hauptwohnsitz h : hauptwohnsitze.stream().filter(x -> x.isDeleted()).collect(Collectors.toList()))
+		{
+			deleteHauptwohnsitz(h);
+		}
+		
 		//Neue Hauptwohnsitze
 		for(Hauptwohnsitz h : hauptwohnsitze.stream().filter(x -> x.isNew()).collect(Collectors.toList()))
 		{
@@ -348,12 +393,6 @@ public class DBManager
 		
 		//Neue MusikantInstrumente
 		for(MusikantInstrument mi : musikantInstrumente.stream().filter(x -> x.isNew()).collect(Collectors.toList()))
-		{
-			insertMusikantInstrument(mi);
-		}
-		
-		//Updated MusikantInstrumente
-		for(MusikantInstrument mi : musikantInstrumente.stream().filter(x -> x.isUpdated()).collect(Collectors.toList()))
 		{
 			insertMusikantInstrument(mi);
 		}

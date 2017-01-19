@@ -4,19 +4,29 @@ public class MusikantInstrument {
 
     private Musikant musikant;
     private Instrument instrument;
-    private String stimme;
     private int musikantid;
     private int instrumentid;
     private boolean isUpdated;
     private boolean isNew;
+    private boolean isDeleted;
 
-	public MusikantInstrument(int musikantid, int instrumentid, String stimme) {
-        this.stimme = stimme;
+	public MusikantInstrument(int musikantid, int instrumentid, boolean isNew) {
         this.musikantid = musikantid;
         this.instrumentid = instrumentid;
-		this.isNew = false;
+		this.isNew = isNew;
 		this.isUpdated = false;
+		this.isDeleted = false;
     }
+
+	public boolean isDeleted()
+	{
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted)
+	{
+		this.isDeleted = isDeleted;
+	}
 	
     public boolean isNew()
 	{
@@ -67,13 +77,5 @@ public class MusikantInstrument {
 
     public void setInstrument(Instrument instrument) {
         this.instrument = instrument;
-    }
-
-    public String getStimme() {
-        return stimme;
-    }
-
-    public void setStimme(String stimme) {
-        this.stimme = stimme;
     }
 }

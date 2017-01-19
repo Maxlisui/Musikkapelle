@@ -12,24 +12,36 @@ public class Musikant
 	private String nachname;
 	private Date geburtsdatum;
 	private String email;
-	private String spezailfunktion;
+	private String spezialfunktion;
 	private int hauptwohnsitzId;
 	private Hauptwohnsitz hauptwohnsitz;
 	private boolean isUpdated;
 	private boolean isNew;
+	private boolean isDeleted;
 
-	public Musikant(int id, String vorname, String nachname, Date geburtsdatum, String email, String spezailfunktion,
-			int hauptwohnsitzId)
+	public Musikant(int id, String vorname, String nachname, Date geburtsdatum, String email, String spezialfunktion,
+			int hauptwohnsitzId, boolean isNew)
 	{
 		this.id = id;
 		this.vorname = vorname;
 		this.nachname = nachname;
 		this.geburtsdatum = geburtsdatum;
 		this.email = email;
-		this.spezailfunktion = spezailfunktion;
+		this.spezialfunktion = spezialfunktion;
 		this.hauptwohnsitzId = hauptwohnsitzId;
-		this.isNew = false;
+		this.isNew = isNew;
 		this.isUpdated = false;
+		this.isDeleted = false;
+	}
+	
+	public boolean isDeleted()
+	{
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted)
+	{
+		this.isDeleted = isDeleted;
 	}
 
 	public boolean isNew()
@@ -98,9 +110,9 @@ public class Musikant
 		this.email = email; 
 	}
 
-	public void setSpezailfunktion(String spezailfunktion)
+	public void setSpezialfunktion(String spezialfunktion)
 	{
-		this.spezailfunktion = spezailfunktion;
+		this.spezialfunktion = spezialfunktion;
 	}
 
 	public int getId()
@@ -129,8 +141,8 @@ public class Musikant
 		return email;
 	}
 
-	public String getSpezailfunktion()
+	public String getSpezialfunktion()
 	{
-		return spezailfunktion;
+		return spezialfunktion;
 	}
 }

@@ -8,15 +8,27 @@ public class Instrument
 	private double preis;
     private boolean isUpdated;
     private boolean isNew;
+    private boolean isDeleted;
 
-	public Instrument(int id, String na, String kat, float pr)
+	public Instrument(int id, String na, String kat, double pr, boolean isNew)
 	{
 		Id = id;
 		name = na;
 		kategorie = kat;
 		preis = pr;
-		this.isNew = false;
+		this.isNew = isNew;
 		this.isUpdated = false;
+		this.isDeleted = false;
+	}
+	
+	public boolean isDeleted()
+	{
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted)
+	{
+		this.isDeleted = isDeleted;
 	}
 	
 	public boolean isNew()

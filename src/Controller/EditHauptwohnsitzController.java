@@ -40,6 +40,9 @@ public class EditHauptwohnsitzController {
     @FXML
     private Button btn_cancel;
 
+    /**
+     * Gets called when the UI is generated. Configures the UI.
+     */
     @FXML
     private void initialize()
     {
@@ -58,12 +61,20 @@ public class EditHauptwohnsitzController {
     	}
     }
     
+    /**
+     * Event for clicking the "Cancel" button
+     * @param event Mousevent handler
+     */
     @FXML
     void btn_cancel_clicked(MouseEvent event) 
     {
     	close();
     }
 
+    /**
+     * Event for clicking the "Save" Button
+     * @param event Mousevent handler
+     */
     @FXML
     void btn_save_clicked(MouseEvent event)
     {
@@ -71,6 +82,9 @@ public class EditHauptwohnsitzController {
     	else saveUpdatedWohnsitz();
     }
     
+    /**
+     * Saves a updated Hauptwohnsitz
+     */
     private void saveUpdatedWohnsitz()
     {
     	String strasse = tBox_Strasse.getText();
@@ -78,7 +92,6 @@ public class EditHauptwohnsitzController {
     	String ort = tBox_Ort.getText();
     	String land = tBox_Land.getText();
     	int PLZ;
-    	boolean success = true;
     	
     	if(!isNullOrEmpty(strasse) && !isNullOrEmpty(hausnummer) && !isNullOrEmpty(land) && !isNullOrEmpty(ort))
     	{
@@ -103,10 +116,6 @@ public class EditHauptwohnsitzController {
     		}
     		catch(Exception e)
     		{
-    			success = false;
-    		}
-    		if(!success)
-    		{
     			if(!showMessageBox("Warunung", "Ein Fehler ist aufgetreten",
 	        			"\"Ok\" um die Infos zu bearbeiten.\n\"Cancel\" um ins Menü zurückzukehren."))
 	        	{
@@ -124,6 +133,9 @@ public class EditHauptwohnsitzController {
     	}
     }
     
+    /**
+     * Saves a new Hauptwohnsitz
+     */
     private void saveNewWohnsitz()
     {
     	String strasse = tBox_Strasse.getText();
@@ -131,7 +143,6 @@ public class EditHauptwohnsitzController {
     	String ort = tBox_Ort.getText();
     	String land = tBox_Land.getText();
     	int PLZ;
-    	boolean success = true;
     	
     	if(!isNullOrEmpty(strasse) && !isNullOrEmpty(hausnummer) && !isNullOrEmpty(land) && !isNullOrEmpty(ort))
     	{
@@ -149,10 +160,6 @@ public class EditHauptwohnsitzController {
     		}
     		catch(Exception e)
     		{
-    			success = false;
-    		}
-    		if(!success)
-    		{
     			if(!showMessageBox("Warunung", "Ein Fehler ist aufgetreten",
 	        			"\"Ok\" um die Infos zu bearbeiten.\n\"Cancel\" um ins Menü zurückzukehren."))
 	        	{
@@ -170,11 +177,21 @@ public class EditHauptwohnsitzController {
     	}
     }
     
+    /**
+     * Checks whether the given String is null or empty
+     * @param s Given string
+     * @return Whether the string is null or empty
+     */
     private boolean isNullOrEmpty(String s)
     {
     	return s == null||s.trim().isEmpty();
     }
     
+    /**
+     * Opens a alert box 
+     * @param title Title of the Box
+     * @param content Content of the Box
+     */
     private void showMessageBox(String title, String content)
 	{
     	Alert alert = new Alert(AlertType.INFORMATION);
@@ -185,6 +202,13 @@ public class EditHauptwohnsitzController {
     	alert.showAndWait();
 	}
     
+    /**
+     * Opens a alert box
+     * @param title Title of the box
+     * @param header Header of the box
+     * @param body Body of the box
+     * @return Whether "Ok" Button is pressed
+     */
     private boolean showMessageBox(String title, String header, String body)
 	{
     	Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -203,6 +227,9 @@ public class EditHauptwohnsitzController {
     	}
 	}
     
+    /**
+     * Closes the stage
+     */
     private void close()
     {
         Stage thisStage = (Stage) btn_cancel.getScene().getWindow();

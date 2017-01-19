@@ -58,9 +58,9 @@
             </Tab>
           <Tab text="Instrumente">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="168.0" prefWidth="651.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="651.0">
                      <children>
-                        <TableView fx:id="tView_Instrumente" layoutX="139.0" layoutY="95.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="tView_Instrumente" layoutX="146.0" layoutY="104.0" prefHeight="405.0" prefWidth="675.0" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="column_Instrument_Id" prefWidth="75.0" text="Id" />
                             <TableColumn fx:id="column_Instrument_Name" prefWidth="75.0" text="Name" />
@@ -70,6 +70,8 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
+                        <Button fx:id="btn_createInstrument" layoutX="520.0" layoutY="419.0" mnemonicParsing="false" onMouseClicked="#btn_createInstrument_clicked" text="Instrument erstellen" />
+                        <Button fx:id="btn_removeInstrument" layoutX="361.0" layoutY="419.0" mnemonicParsing="false" onMouseClicked="#btn_removeInstrument_clicked" text="Instrument löschen" />
                      </children>
                   </AnchorPane>
             </content>
