@@ -19,7 +19,13 @@ public class DBManager
 			conn = DriverManager.getConnection("jdbc:mysql://localhost/Musikkapelle", "root", "root");
 		}
 	}
-
+	
+	/**
+	 * Gets the DBManager Instance.
+	 * @return The Instance
+	 * @throws SQLException In case there is an error during the DB connection
+	 * @throws ClassNotFoundException In case the Driver could not be found
+	 */
 	public static synchronized DBManager getInstance() throws SQLException, ClassNotFoundException
 	{
 		if (instance == null)
@@ -29,16 +35,20 @@ public class DBManager
 		return instance;
 	}
 
-	public Connection getConnection()
-	{
-		return conn;
-	}
-
+	/**
+	 * schlie�t die Verbindung zur Datenbank
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich 
+	 */
 	public void close() throws SQLException
 	{
 		conn.close();
 	}
 
+	/**
+	 * holt Alle Musikannten
+	 * @return gibt ArrayList aus Objekten der Klasse Musikant zur�ck
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich
+	 */
 	public ArrayList<Musikant> selectAllMusikanten() throws SQLException
 	{
 		ArrayList<Musikant> musikanten = new ArrayList<>();
@@ -59,6 +69,11 @@ public class DBManager
 		return musikanten;
 	}
 	
+	/**
+	 * Liefert alle Hauptwohnsitze
+	 * @return gibt ArrayList aus Objekten der Klasse Hauptwohnsitz zur�ck
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich
+	 */
 	public ArrayList<Hauptwohnsitz> selectAllHauptwohnsitze() throws SQLException
 	{
 		ArrayList<Hauptwohnsitz> hauptwohnsitze = new ArrayList<>();
@@ -79,6 +94,12 @@ public class DBManager
 		return hauptwohnsitze;
 	}
 
+	/**
+	 * holt den Hauptwohnsitz eines bestimmten Musikanten "m"
+	 * @param m; Referenzvariable eines Objektes der Klasse Musikant
+	 * @return gibt ein Objekt der Klasse Hauptwohnsitz zur�ck
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich
+	 */
 	public Hauptwohnsitz selectHauptwohnsitzPerMusikant(Musikant m) throws SQLException
 	{
 		Hauptwohnsitz hauptwohnsitz = null;
@@ -99,7 +120,12 @@ public class DBManager
 
 		return hauptwohnsitz;
 	}
-
+	
+	/**
+	 * holt ALLE Instrumente
+	 * @return gibt ArrayList aus Objekten der Klasse Instrument zur�ck
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich
+	 */
 	public ArrayList<Instrument> selectAllIntrumente() throws SQLException
 	{
 		ArrayList<Instrument> instrumente = new ArrayList<>();
@@ -120,6 +146,12 @@ public class DBManager
 		return instrumente;
 	}
 
+	/**
+	 * Liefert alle Musikanten mit den dazu geh�rigen Instrumenten, Musikanten die keine Instrumente spielen,
+	 * oder Instrumente die von niemandem gespielt werden, werden nicht angezeigt.
+	 * @return gibt ArrayList aus Objekten der Klasse MusikantInstrument zur�ck
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich
+	 */
 	public ArrayList<MusikantInstrument> selectAllMusikantInstrument() throws SQLException
 	{
 		ArrayList<MusikantInstrument> musikantInstrumente = new ArrayList<>();
@@ -140,6 +172,12 @@ public class DBManager
 		return musikantInstrumente;
 	}
 
+	/**
+	 * Gibt den Musikanten eines bestimmten Instrumentes zur�ck
+	 * @param m; Referenzvariable eines Objektes der Klasse MusikantInstrument 
+	 * @return gibt ein Objekt der Klasse Musikant zur�ck
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich
+	 */
 	private Musikant selectMusikantPerMusikantInstrument(MusikantInstrument m) throws SQLException
 	{
 		Musikant musikant = null;
@@ -163,6 +201,12 @@ public class DBManager
 		return musikant;
 	}
 
+	/**
+	 * gibt das Instrument eines bestimmten Musikanten zur�ck
+	 * @param m; Referenzvariable eines Objektes der Klasse MusikantInstrument
+	 * @return gibt ein Objekt der Klasse Instrument zur�ck
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich
+	 */
 	private Instrument selectInstrumentPerMusikantInstrument(MusikantInstrument m) throws SQLException
 	{
 		Instrument instrument = null;
@@ -184,6 +228,11 @@ public class DBManager
 
 		return instrument;
 	}
+	/**
+	 * Parameter eines bestimmten Musikantens �ndern 
+	 * @param m; Referenzvariable eines Objektes der Klasse Musikant
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich
+	 */
 
 	private void updateMusikant(Musikant m) throws SQLException
 	{
@@ -201,6 +250,12 @@ public class DBManager
 
 		stmt.close();
 	}
+	
+	/**
+	 * Parameter eines bestimmten Instruments �ndern
+	 * @param i; Referenzvariable eines Objektes der Klasse Instrument
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich 
+	 */
 
 	private void updateInstrument(Instrument i) throws SQLException
 	{
@@ -214,6 +269,12 @@ public class DBManager
 
 		stmt.close();
 	}
+	
+	/**
+	 * Parameter eines bestimmten Hauptwohnsitzes �ndern
+	 * @param h; Referenzvariable eines Objektes der Klasse Hauptwohnsitz
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich
+	 */
 
 	private void updateHauptwohnsitz(Hauptwohnsitz h) throws SQLException
 	{
@@ -231,6 +292,12 @@ public class DBManager
 		stmt.close();
 	}
 
+	/**
+	 * Musikant mit bestimmten Parametern erstellen
+	 * @param m; Referenzvariable eines Objektes der Klasse Musikant
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich
+	 * 
+	 */
 	private void insertMusikant(Musikant m) throws SQLException
 	{
 		String query = "INSERT INTO Musikant (Id, Vorname, Nachname, Geburtsdatum, Email, Spezialfunktion, Hauptwohnsitz)"
@@ -247,6 +314,12 @@ public class DBManager
 
 		stmt.close();
 	}
+	
+	/**
+	 * Instrument mit bestimmten Parametern erstellen
+	 * @param i; Referenzvariable eines Objektes der Klasse Instrument
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich
+	 */
 
 	private void insertIntrument(Instrument i) throws SQLException
 	{
@@ -261,6 +334,11 @@ public class DBManager
 		stmt.close();
 	}
 
+	/**
+	 * Hauptwohnsitz erstellen
+	 * @param h; Referenzvariable eines Objektes der Klasse Hauptwohnsitz
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich 
+	 */
 	private void insertHauptwohnsitz(Hauptwohnsitz h) throws SQLException
 	{
 		String query = "INSERT INTO Hauptwohnsitz (Id, Strasse, Hausnummer, PLZ, Ort, Land) VALUES(?, ?, ?, ?, ?, ?)";
@@ -276,9 +354,14 @@ public class DBManager
 		stmt.close();
 	}
 
+	/**
+	 * einem bestimmten Musikanten ein bestimmtes Instrument zuweisen
+	 * @param mi; Referenzvariable eines Objektes der Klasse MusikantInstrument
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich * 
+	 */
 	private void insertMusikantInstrument(MusikantInstrument mi) throws SQLException
 	{
-		String query = "INSERT INTO MusikantInstrument (MusikantID, InstrumentID) VALUES(?, ?)";
+		String query = "INSERT INTO MusikantInstrument (MusikantID, InstrumentID VALUES(?, ?)";
 		PreparedStatement stmt = conn.prepareStatement(query);
 		stmt.setInt(1, mi.getMusikantid());
 		stmt.setInt(2, mi.getInstrumentid());
@@ -287,6 +370,11 @@ public class DBManager
 		stmt.close();
 	}
 	
+	/**
+	 * einen Musikanten mit bestimmten Parametern l�schen
+	 * @param m; Referenzvariable eines Objektes der Klasse Musikant
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich
+	 */
 	private void deleteMusikant(Musikant m) throws SQLException
 	{
 		String query = "DELETE FROM Musikant WHERE Id=?";
@@ -297,6 +385,11 @@ public class DBManager
 		stmt.close();
 	}
 	
+	/**
+	 * einen bestimmten Hauptwohnsitz l�schen
+	 * @param h; Referenzvariable eines Objektes der Klasse Hauptwohnsitz
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich
+	 */
 	private void deleteHauptwohnsitz(Hauptwohnsitz h) throws SQLException
 	{
 		String query = "DELETE FROM Hauptwohnsitz WHERE Id=?";
@@ -307,6 +400,11 @@ public class DBManager
 		stmt.close();
 	}
 	
+	/**
+	 * ein bestimmtes Instrument l�schen 
+	 * @param i; Referenzvariable eines Objektes der Klasse Instrument
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich
+	 */
 	private void deleteInstrument(Instrument i) throws SQLException
 	{
 		String query = "DELETE FROM Instrument WHERE Id=?";
@@ -317,6 +415,11 @@ public class DBManager
 		stmt.close();
 	}
 	
+	/**
+	 * bestimmter Musikant h�rt auf bestimmtes Instrument zu spielen
+	 * @param mi; Referenzvariable eines Objektes der Klasse MusikantInstrument
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glic
+	 */
 	private void deleteMusikantInstrument(MusikantInstrument mi) throws SQLException
 	{
 		String query = "DELETE FROM MusikantInstrument WHERE MusikantId=? AND InstrumentId=?";
@@ -328,6 +431,14 @@ public class DBManager
 		stmt.close();
 	}
 
+	/**
+	 * Datenbank aktualisieren
+	 * @param musikanten; Referenzvariable eines Objektes der Klasse Musikanten
+	 * @param instrumente; Referenzvariable eines Objektes der Klasse Instrumente
+	 * @param hauptwohnsitze; Referenzvariable eines Objektes der Klasse Hauptwohnsitze
+	 * @param musikantInstrumente; Referenzvariable eines Objektes der Klasse MusikantInstrument
+	 * @throws SQLException; Exception wenn kein Verbindungsaufbau m�glich
+	 */
 	public void refreshDB(ArrayList<Musikant> musikanten, ArrayList<Instrument> instrumente, ArrayList<Hauptwohnsitz> hauptwohnsitze, 
 			ArrayList<MusikantInstrument> musikantInstrumente) throws SQLException
 	{

@@ -8,8 +8,15 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+/**
+ * @author Maxlisui
+ */
 public class Main extends Application {
-
+	
+	/**
+	 * Starting point for the program
+	 * @param args Arguments from the command line
+	 */
     public static void main(String[] args) {
 
         try {
@@ -31,6 +38,9 @@ public class Main extends Application {
         }
     }
     
+    /**
+     * Starts the UI and opens the MainWindow.fxml
+     */
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{

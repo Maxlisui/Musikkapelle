@@ -205,8 +205,7 @@ public class ListUtils
 			{
 				if(i.getId() == j) available.add(i);
 			}
-		}
-		
+		}		
 		return available;
 	}
 }
